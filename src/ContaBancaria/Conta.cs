@@ -76,7 +76,6 @@ public class Conta
     /// </summary>
     public void Transferir(Conta destino, decimal valor)
     {
-        // TODO: Implemente usando TDD
         throw new NotImplementedException();
     }
 
@@ -89,7 +88,6 @@ public class Conta
     /// </summary>
     public void Encerrar()
     {
-        // TODO: Implemente usando TDD
         throw new NotImplementedException();
     }
 }
