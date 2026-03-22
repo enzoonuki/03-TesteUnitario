@@ -214,6 +214,71 @@ public class ContaTests
     //    - Transferência com conta destino inativa lança exceção
     // =======================================================
 
+    [Fact]
+    public void Transferir_ValorValido_AtualizaSaldoAmbasContas()
+    {
+        // Arrange
+        var contaOrigem = new Conta("Maria", 100);
+        var contaDestino = new Conta("João", 50);
+
+        // Act
+        contaOrigem.Transferir(contaDestino, 30);
+        // Assert
+        Assert.Equal(70, contaOrigem.Saldo);
+        Assert.Equal(80, contaDestino.Saldo);
+    }
+
+    [Fact]
+    public void Transferir_SaldoInsuficiente_LancaInvalidOperationException()
+    {
+        // Arrange
+        var contaOrigem = new Conta("Maria", 100);
+        var contaDestino = new Conta("João", 50);
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => contaOrigem.Transferir(contaDestino,
+            150));
+    }
+
+    [Fact]
+    public void Transferir_ValorZeroOuNegativo_LancaArgumentException()
+    {
+        // Arrange
+        var contaOrigem = new Conta("Maria", 100);
+        var contaDestino = new Conta("João", 50);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => contaOrigem.Transferir(contaDestino, 0
+        ));
+        Assert.Throws<ArgumentException>(() => contaOrigem.Transferir(contaDestino, -50
+        ));
+    }
+
+    [Fact]
+    public void Transferir_ContaOrigemInativa_LancaInvalidOperationException()
+    {
+        // Arrange
+        var contaOrigem = new Conta("Maria", 0);
+        var contaDestino = new Conta("João", 100);
+        contaOrigem.Encerrar();
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => contaOrigem.Transferir(contaDestino,
+            30));
+    }
+
+    [Fact]
+    public void Transferir_ContaDestinoInativa_LancaInvalidOperationException()
+    {
+        // Arrange
+        var contaOrigem = new Conta("Maria", 100);
+        var contaDestino = new Conta("João", 0);
+        contaDestino.Encerrar();
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => contaOrigem.Transferir(contaDestino,
+            30));
+    }
 
     // =======================================================
     //  Testes para Encerrar
