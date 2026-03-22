@@ -150,7 +150,59 @@ public class ContaTests
     //    - Saque com valor negativo lança ArgumentException
     //    - Saque em conta inativa lança InvalidOperationException
     // =======================================================
+    [Fact]
+    public void Sacar_ValorValido_AtualizaSaldo()
+    {
+        // Arrange
+        var conta = new Conta("Maria", 100);
 
+        // Act
+        conta.Sacar(50);
+
+        // Assert
+        Assert.Equal(50, conta.Saldo);
+    }
+
+    [Fact]
+    public void Sacar_ValorMaiorQueSaldo_LancaInvalidOperationException()
+    {
+        // Arrange
+        var conta = new Conta("Maria", 100);
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => conta.Sacar(150));
+    }
+
+    [Fact]
+    public void Sacar_ValorZero_LancaArgumentException()
+    {
+        // Arrange
+        var conta = new Conta("Maria", 100);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => conta.Sacar(0));
+    }
+
+    [Fact]
+    public void Sacar_ValorNegativo_LancaArgumentException()
+    {
+        // Arrange
+        var conta = new Conta("Maria", 100);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => conta.Sacar(-50));
+    }
+
+    [Fact]
+    public void Sacar_ContaInativa_LancaInvalidOperationException()
+    {
+        // Arrange
+        var conta = new Conta("Maria", 100);
+        conta.Encerrar();
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => conta.Sacar(50));
+    }
 
     // =======================================================
     //  Testes para Transferir
