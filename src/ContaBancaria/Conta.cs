@@ -88,6 +88,10 @@ public class Conta
     /// </summary>
     public void Encerrar()
     {
-        throw new NotImplementedException();
+        if (!Ativa)
+            throw new InvalidOperationException("A conta já está inativa.");
+        if (Saldo != 0)
+            throw new InvalidOperationException("Não é possível encerrar a conta com saldo diferente de zero.");
+        Ativa = false;
     }
 }

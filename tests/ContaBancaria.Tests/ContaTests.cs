@@ -134,7 +134,7 @@ public class ContaTests
     public void Depositar_ContaInativa_LancaInvalidOperationException()
     {
         // Arrange
-        var conta = new Conta("Maria", 100);
+        var conta = new Conta("Maria", 0);
         conta.Encerrar();
 
         // Act & Assert
